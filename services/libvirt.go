@@ -2,6 +2,7 @@ package services
 
 import (
 	"fmt"
+	"regexp"
 	"strings"
 )
 
@@ -35,4 +36,34 @@ func ListRunningVms() ([]Vm, error) {
 	}
 	fmt.Println(vms)
 	return vms, nil
+}
+
+type UsbDevice struct {
+	ID     string
+	Name   string
+	Bus    string
+	Device string
+}
+
+func ListUsbs() ([]UsbDevice, error) {
+	usbs := make([]UsbDevice, 0, 3)
+	out, err := CmdExecStrOutput("lsusb")
+	if err != nil {
+		return nil, err
+	}
+	reg := regexp.MustCompile(`Bus (\d+) Device (\d+): ID (\S+) (.*)`)
+	lines := strings.Split(out, "\n")
+	for _, l := range lines {
+		groups := reg.FindStringSubmatch(l)
+		if len(groups) > 0 {
+			usb := UsbDevice{
+				Bus:    groups[1],
+				Device: groups[2],
+				ID:     groups[3],
+				Name:   groups[4],
+			}
+			usbs = append(usbs, usb)
+		}
+	}
+	return usbs, nil
 }
