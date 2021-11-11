@@ -9,14 +9,14 @@ func ConfigRoutes(router *gin.Engine) *gin.Engine {
 	main := router.Group("api/v1")
 	{
 		main.GET("/test", controllers.Test)
-		// books := main.Group("books")
-		// {
-		// 	books.GET("/", controllers.ShowAllBooks)
-		// 	// books.GET("/:id", controllers.ShowBook)
-		// 	// books.POST("/", controllers.CreateBook)
-		// 	// books.PUT("/", controllers.EditBook)
-		// 	// books.DELETE("/:id", controllers.DeleteBook)
-		// }
+		main.GET("/list-running-vms", controllers.ListRunningVms)
+		main.GET("/save-devices", controllers.SaveDevices)
+		main.GET("/snapshot-devices", controllers.SnapshotDevices)
+		main.GET("/new-devices", controllers.NewDevices)
+		main.GET("/attach-usb", controllers.AttachUsb)
+		main.GET("/attach-disk", controllers.AttachDisk)
+		main.GET("/dettach-disk", controllers.DetachDisk)
+		main.GET("/dettach-usb", controllers.DetachUsb)
 	}
 
 	return router

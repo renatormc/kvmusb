@@ -67,3 +67,15 @@ func ListUsbs() ([]UsbDevice, error) {
 	}
 	return usbs, nil
 }
+
+type Disk struct {
+	Vendor string
+	Label  string
+	Model  string
+	Name   string
+	KName  string
+}
+
+func ListDisks() ([]Disk, error) {
+
+}
